@@ -4,15 +4,15 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between align-content-center">
+                <div class="card bg-secondary">
+                    <div class="card-header d-flex justify-content-between align-content-center text-light">
                         <div class="title" style="line-height: 35px">Tutti i post</div>
                         <a href="{{ route('posts.create') }}" class="btn btn-success">Crea Post</a>
                     </div>
 
-                    <div class="card-body row p-5 ">
+                    <div class="card-body row p-5">
                         @foreach ($posts as $post)
-                            <div class="card col-6 p-3" style="width: 18rem;">
+                            <div class="card col-6 p-3 bg-dark text-light" style="width: 18rem;">
                                 @if ($post->image)
                                     <img src="{{ asset("storage/{$post->image}") }}" class="card-img-top"
                                         alt="{{ $post->title }}">
