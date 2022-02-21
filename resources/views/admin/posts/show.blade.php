@@ -25,6 +25,8 @@
                                 <p class="card-text bg-info">Categoria: {{ $post->category->name }}</p>
                             @endif
 
+                            <p class="card-text">Slug: {{ $post->slug }}</p>
+
                             <div class="btn-container d-flex my-3">
                                 {{-- Pulsante Modifica --}}
                                 <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-warning mr-2">Modifica</a>

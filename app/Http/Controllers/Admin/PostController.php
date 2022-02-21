@@ -65,15 +65,8 @@ class PostController extends Controller
     $newPost->category_id = $data["category_id"];
 
     //gestisco lo slug
-    $slug = Str::slug($newPost->title, '-');
-    $i = 1;
 
-    while (Post::where("slug", $slug)->first()) {
-      $slug = Str::slug($newPost->title, '-') . "-{$i}";
-      $i++;
-    }
-
-    $newPost->slug = $slug;
+    $newPost->slug = $this->getSlug($newPost->title);
 
     //se è presente l'immagine la salvo
     if (isset($data["image"])) {
@@ -132,14 +125,7 @@ class PostController extends Controller
       $slug = Str::slug($post->title, '-');
 
       if ($slug != $post->slug) {
-        $i = 1;
-
-        while (Post::where("slug", $slug)->first()) {
-          $slug = Str::slug($post->title, '-') . "-{$i}";
-          $i++;
-        }
-
-        $post->slug = $slug;
+        $post->slug = $this->getSlug($post->title);
       }
     }
 
@@ -163,5 +149,17 @@ class PostController extends Controller
     $post->delete();
 
     return redirect()->route("posts.index");
+  }
+
+  private function getSlug($title)
+  {
+    $slug = Str::slug($title, '-');
+    $i = 1;
+
+    while (Post::where("slug", $slug)->first()) {
+      $slug = Str::slug($title, '-') . "-{$i}";
+      $i++;
+    }
+    return $slug;
   }
 }

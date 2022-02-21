@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container">
+    <div class="container text-light">
         <h1>Crea un nuovo Post</h1>
 
         <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">

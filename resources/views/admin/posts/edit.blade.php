@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container">
+    <div class="container text-light">
         <h1>Modifica Post</h1>
 
         <form action="{{ route('posts.update', $post->id) }}" method="POST">
@@ -51,7 +51,7 @@
                 <label class="form-check-label" for="published">Pubblica</label>
             </div>
 
-            <button type="submit" class="btn btn-warning">Modifica</button>
+            <button type="submit" class="btn btn-warning mt-3">Applica Modifiche</button>
         </form>
 
         @if ($errors->any())
