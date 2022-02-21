@@ -5,9 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Tag;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TagController extends Controller
 {
+  protected $validationRules = [
+    "name" => "required|string|max:50",
+  ];
+
   /**
    * Display a listing of the resource.
    *
@@ -44,23 +49,23 @@ class TagController extends Controller
     $data = $request->all();
 
     // aggiorno la risorsa con i nuovi dati
-    $newCat = new Tag();
-    $newCat->name = $data["name"];
+    $newTag = new Tag();
+    $newTag->name = $data["name"];
 
     //gestisco lo slug
-    $slug = Str::slug($newCat->name, '-');
+    $slug = Str::slug($newTag->name, '-');
     $i = 1;
 
-    while (Category::where("slug", $slug)->first()) {
-      $slug = Str::slug($newCat->name, '-') . "-{$i}";
+    while (Tag::where("slug", $slug)->first()) {
+      $slug = Str::slug($newTag->name, '-') . "-{$i}";
       $i++;
     }
 
-    $newCat->slug = $slug;
+    $newTag->slug = $slug;
 
-    $newCat->save();
+    $newTag->save();
     // restituisco la pagina show della risorsa modificata
-    return redirect()->route('categories.show', $newCat->id);
+    return redirect()->route('tags.show', $newTag->id);
   }
 
   /**
@@ -82,7 +87,7 @@ class TagController extends Controller
    */
   public function edit(Tag $tag)
   {
-    //
+    return view("admin.tags.edit", compact("tag"));
   }
 
   /**
@@ -94,7 +99,32 @@ class TagController extends Controller
    */
   public function update(Request $request, Tag $tag)
   {
-    //
+    // validazione
+    $request->validate($this->validationRules);
+
+    $data = $request->all();
+
+    //gestisco lo slug
+    if ($tag->name != $data['name']) {
+      $tag->name = $data['name'];
+
+      $slug = Str::slug($tag->name, '-');
+
+      if ($slug != $tag->slug) {
+        $i = 1;
+
+        while (Tag::where("slug", $slug)->first()) {
+          $slug = Str::slug($tag->name, '-') . "-{$i}";
+          $i++;
+        }
+
+        $tag->slug = $slug;
+      }
+    }
+
+    $tag->save();
+
+    return redirect()->route('tags.show', $tag->id);
   }
 
   /**
@@ -105,6 +135,8 @@ class TagController extends Controller
    */
   public function destroy(Tag $tag)
   {
-    //
+    $tag->delete();
+
+    return redirect()->route("tags.index");
   }
 }
