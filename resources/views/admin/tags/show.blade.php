@@ -10,29 +10,29 @@
                     <th scope="col">Nome</th>
                     <th scope="col">Slug</th>
                     <th scope="col">Actions</th>
-                    @if (count($category->posts) > 0)
+                    @if (count($tag->posts) > 0)
                         <th scope="col">Post Associati</th>
                     @endif
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <th scope="row">{{ $category->id }}</th>
-                    <td>{{ $category->name }}</td>
-                    <td>{{ $category->slug }}</td>
+                    <th scope="row">{{ $tag->id }}</th>
+                    <td>{{ $tag->name }}</td>
+                    <td>{{ $tag->slug }}</td>
                     <td class="d-flex">
-                        <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning mr-1">Modifica</a>
+                        <a href="{{ route('tags.edit', $tag->id) }}" class="btn btn-warning mr-1">Modifica</a>
                         {{-- Pulsante Elimina --}}
-                        <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
+                        <form action="{{ route('tags.destroy', $tag->id) }}" method="POST">
                             @csrf
                             @method("DELETE")
                             <button type="submit" class="btn btn-danger">Elimina</button>
                         </form>
                     </td>
-                    @if (count($category->posts) > 0)
+                    @if (count($tag->posts) > 0)
                         <td>
                             <ul>
-                                @foreach ($category->posts as $post)
+                                @foreach ($tag->posts as $post)
                                     <li>{{ $post->title }}</li>
                                 @endforeach
                             </ul>

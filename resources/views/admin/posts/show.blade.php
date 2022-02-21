@@ -27,6 +27,15 @@
 
                             <p class="card-text">Slug: {{ $post->slug }}</p>
 
+                            @if (count($post->tags) > 0)
+                                <div class="my-3">
+                                    <strong>Tags: </strong>
+                                    @foreach ($post->tags as $tag)
+                                        <span class="badge badge-dark">{{ $tag->name }}</span>
+                                    @endforeach
+                                </div>
+                            @endif
+
                             <div class="btn-container d-flex my-3">
                                 {{-- Pulsante Modifica --}}
                                 <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-warning mr-2">Modifica</a>

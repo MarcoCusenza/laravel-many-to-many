@@ -45,6 +45,26 @@
                 @enderror
             </div>
 
+            <div class="form-group">
+                <h5>Tags</h5>
+                @foreach ($tags as $tag)
+                    <div class="form-check form-check-inline">
+                        @if (old('tags'))
+                            <input type="checkbox" class="form-check-input" name="tags[]" id="{{ $tag->slug }}"
+                                value="{{ $tag->id }}" {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
+                        @else
+                            <input type="checkbox" class="form-check-input" name="tags[]" id="{{ $tag->slug }}"
+                                value="{{ $tag->id }}" {{ $post->tags->contains($tag) ? 'checked' : '' }}>
+                        @endif
+
+                        <label class=" form-check-label" for="{{ $tag->slug }}">{{ $tag->name }}</label>
+                    </div>
+                @endforeach
+                @error('tags')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
             <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="published" name="published"
                     {{ $post->published ? 'checked' : '' }}>
