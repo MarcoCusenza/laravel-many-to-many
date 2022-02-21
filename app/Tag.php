@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Pivot
+class Tag extends Model
 {
   public function posts()
   {
